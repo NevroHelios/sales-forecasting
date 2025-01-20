@@ -1,5 +1,5 @@
 import streamlit as st
-from helper import EDA
+from src.helper import EDA
 
 def eda_page():
     st.title("🔍 Exploratory Data Analysis")
@@ -58,4 +58,9 @@ def eda_page():
                 """
             )
             eda.plot_sellTrend_product()
-        
+       
+    with st.expander("📈 Sinusoidal Sales Analysis", expanded=True): 
+        eda.plot_sinusoidal_sells()
+    
+    # with st.expander("📊 Yearly Sales Ratio", expanded=True):
+    #     eda.plot_year_ratio()

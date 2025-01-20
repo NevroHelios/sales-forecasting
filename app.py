@@ -1,9 +1,9 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-from helper import *
+from src.helper import *
 st.set_page_config(page_title="My Streamlit App", page_icon=":shark:", layout="wide")
-from eda_page import eda_page
+from src.eda_page import eda_page
 
 
 with st.sidebar:

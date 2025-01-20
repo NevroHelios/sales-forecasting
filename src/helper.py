@@ -4,12 +4,17 @@ from sklearn.metrics import mean_absolute_percentage_error
 import matplotlib.pyplot as plt
 import streamlit as st
 import seaborn as sns
+import plotly.graph_objects as go
 import plotly.express as px
 
+from src.feategg import Feategg
+from src.cfg import CFG
+    
 
 class EDA:
     def __init__(self):
         self.df = self._load_data()
+        self.feate = Feategg(self.df)
         
     def _load_data(self):
         train, test = pd.read_csv("./data/train.csv"), pd.read_csv("./data/test.csv")
@@ -70,6 +75,77 @@ class EDA:
             color_discrete_sequence=px.colors.diverging.Armyrose
         )
         st.plotly_chart(fig, use_container_width=True)
+        
+    def plot_sinusoidal_sells(self):
+        if hasattr(self.feate, 'fig_sinu_sell'):
+            st.plotly_chart(self.feate.fig_sinu_sell, use_container_width=True)
+        else:
+            st.warning("Plot not available. Please generate it first.")
+
+    
+    def plot_year_ratio(self):
+        st.plotly_chart(self._plot_year_ratio(self.feate.year_ratio), use_container_width=True)
+    
+    def _plot_year_ratio(self, year_ratio):
+        # Create figure
+        fig = go.Figure()
+        
+        # Add the year ratio line
+        fig.add_trace(
+            go.Scatter(
+                x=np.arange(1, 367),  # Days of year
+                y=year_ratio,
+                mode='lines',
+                name='Median Year Ratio',
+                line=dict(
+                    color='black',
+                    width=2
+                )
+            )
+        )
+        
+        # Update layout to match matplotlib style
+        fig.update_layout(
+            title='Year Ratio by Day of Year',
+            xaxis_title='Day of Year',
+            yaxis_title='Ratio Value',
+            showlegend=True,
+            legend=dict(
+                yanchor="top",
+                y=0.99,
+                xanchor="right",
+                x=0.99,
+                bgcolor='rgba(255, 255, 255, 0.9)',
+                bordercolor='rgba(0, 0, 0, 0.5)',
+                borderwidth=1
+            ),
+            plot_bgcolor='white',
+            paper_bgcolor='white'
+        )
+        
+        # Update axes
+        fig.update_xaxes(
+            showgrid=True,
+            gridwidth=1,
+            gridcolor='rgba(0, 0, 0, 0.1)',
+            showline=True,
+            linewidth=1,
+            linecolor='black',
+            range=[1, 366]  # Full year range
+        )
+        
+        fig.update_yaxes(
+            showgrid=True,
+            gridwidth=1,
+            gridcolor='rgba(0, 0, 0, 0.1)',
+            showline=True,
+            linewidth=1,
+            linecolor='black'
+        )
+        return fig
+
+    
+        
         
 # HOME Page
 def home_page():
