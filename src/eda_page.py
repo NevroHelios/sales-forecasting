@@ -62,5 +62,5 @@ def eda_page():
     with st.expander("📈 Sinusoidal Sales Analysis", expanded=True): 
         eda.plot_sinusoidal_sells()
     
-    # with st.expander("📊 Yearly Sales Ratio", expanded=True):
-    #     eda.plot_year_ratio()
+    with st.expander("📊 Fourier Analysis", expanded=True):
+        eda.fourier_analysis()
