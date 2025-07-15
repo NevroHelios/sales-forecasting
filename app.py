@@ -2,23 +2,25 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from src.helper import *
-st.set_page_config(page_title="My Streamlit App", page_icon=":shark:", layout="wide")
+st.set_page_config(page_title="Sticker Sales Forecasting | Rank 120", page_icon="🏷️", layout="wide")
 from src.eda_page import eda_page
+from src.results_page import results_page
 
 
 with st.sidebar:
     st.image("https://avatars.githubusercontent.com/u/15898288?s=200&v=4", width=100)
-    st.title("Streamlit App")
-    st.header("Menu")
-    options = st.radio("Select an option", ["Home", "EDA", "Results"])
+    st.title("🏷️ Sales Forecasting")
+    st.markdown("**Kaggle Rank: 120** 🏆")
+    st.header("Navigation")
+    options = st.radio("Select a page", ["🏠 Home", "🔍 EDA", "🏆 Results"])
     
     
-if options == "Home":
+if options == "🏠 Home":
     home_page()
-elif options == "EDA":
+elif options == "🔍 EDA":
     eda_page()
-elif options == "Results":
-    st.write("Contact me at [email](mailto:contact@streamlit.io)")
+elif options == "🏆 Results":
+    results_page()
 
 
 # df = pd.DataFrame(np.random.randn(10, 2), columns=["a", "b"])
